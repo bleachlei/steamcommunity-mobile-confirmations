@@ -26,7 +26,7 @@ SteamcommunityMobileConfirmations.prototype.FetchConfirmations = function (callb
 {
 	this._request.get({
 		uri: this._generateConfirmationURL(),
-		proxy: this.requestOptions
+		proxy: this.requestOptions.proxy || null
 	}, (function(error, response, body)
 	{
 		if (error || response.statusCode != 200)
@@ -78,7 +78,7 @@ SteamcommunityMobileConfirmations.prototype._sendConfirmationAjax = function (co
 
 	this._request.get({
 		uri: endpoint + queryString,
-		proxy: this.requestOptions
+		proxy: this.requestOptions.proxy || null
 	}, (function(error, response, body)
 	{
 		if (error || response.statusCode != 200)
