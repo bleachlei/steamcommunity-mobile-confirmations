@@ -10,7 +10,11 @@ var SteamcommunityMobileConfirmations = function (options)
 	this.device_id       = options.device_id;
 	this.requestOptions  = options.requestOptions;
 	this._j = Request.jar();
-	this._request = Request.defaults({ jar: this._j });
+	let defaults={ jar: this._j }
+	if(options.requestOptions && options.requestOptions.proxy){
+          defaults.proxy=options.requestOptions.proxy
+	}
+	this._request = Request.defaults(defaults);
 
 	options.webCookie.forEach((function(name)
 	{
@@ -25,8 +29,7 @@ var SteamcommunityMobileConfirmations = function (options)
 SteamcommunityMobileConfirmations.prototype.FetchConfirmations = function (callback)
 {
 	this._request.get({
-		uri: this._generateConfirmationURL(),
-		proxy: this.requestOptions.proxy || null
+		uri: this._generateConfirmationURL()	
 	}, (function(error, response, body)
 	{
 		if (error || response.statusCode != 200)
@@ -77,8 +80,7 @@ SteamcommunityMobileConfirmations.prototype._sendConfirmationAjax = function (co
 	                  '&cid=' + confirmation.id + '&ck=' + confirmation.key;
 
 	this._request.get({
-		uri: endpoint + queryString,
-		proxy: this.requestOptions.proxy || null
+		uri: endpoint + queryString,		
 	}, (function(error, response, body)
 	{
 		if (error || response.statusCode != 200)
