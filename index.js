@@ -8,7 +8,7 @@ var SteamcommunityMobileConfirmations = function (options)
 	this.steamid         = options.steamid;
 	this.identity_secret = options.identity_secret;
 	this.device_id       = options.device_id;
-
+	this.requestOptions  = options.requestOptions;
 	this._j = Request.jar();
 	this._request = Request.defaults({ jar: this._j });
 
@@ -26,6 +26,7 @@ SteamcommunityMobileConfirmations.prototype.FetchConfirmations = function (callb
 {
 	this._request.get({
 		uri: this._generateConfirmationURL(),
+		proxy: this.requestOptions
 	}, (function(error, response, body)
 	{
 		if (error || response.statusCode != 200)
@@ -77,6 +78,7 @@ SteamcommunityMobileConfirmations.prototype._sendConfirmationAjax = function (co
 
 	this._request.get({
 		uri: endpoint + queryString,
+		proxy: this.requestOptions
 	}, (function(error, response, body)
 	{
 		if (error || response.statusCode != 200)
