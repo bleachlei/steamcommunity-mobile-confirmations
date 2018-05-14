@@ -50,7 +50,7 @@ SteamcommunityMobileConfirmations.prototype.FetchConfirmations = function (callb
 				return $(this).text();
 			});
 			confirmations.push({
-				id:           $confirmation.data('confid'),
+				id:           $confirmation.data('confid').toString(),
 				key:          $confirmation.data('key'),
 				descriptions: descriptions,
 				offerId:      $confirmation.data('creator'),
